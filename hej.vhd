@@ -17,4 +17,6 @@ use STD.textio.all;
 use IEEE.std_logic_textio.all;
 use IEEE.std_logic_signed.all;
 
+hej
+
 entity E is
