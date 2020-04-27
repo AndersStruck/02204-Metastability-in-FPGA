@@ -25,10 +25,16 @@ entity top is
     Port ( CLK100MHZ 	: in STD_LOGIC;
            reset 		: in STD_LOGIC;
            data 		: in STD_LOGIC;
-           LED		: out STD_LOGIC_VECTOR (0 to 9));
+           LED			: out STD_LOGIC_VECTOR (0 to 9));
 end top;
 
 architecture Behavioral of top is
+	component clk_wiz_0 is
+        Port ( clk_in1	: in STD_LOGIC;
+			   reset 	: in STD_LOGIC;
+           	   clk_out 	: out STD_LOGIC;
+           	   locked	: out STD_LOGIC);
+    end component;
     component dut is
         Port ( clk 		: in STD_LOGIC;
 			   reset 	: in STD_LOGIC;
@@ -43,18 +49,25 @@ architecture Behavioral of top is
 			   count 	: out STD_LOGIC_VECTOR (0 to 9));
     end component;
     
-    signal count_enable : STD_LOGIC;
+    signal count_enable, clk : STD_LOGIC;
 begin
+
+    clk_1 : clk_wiz_0 port map(
+    	clk_in1		=> CLK100MHZ,
+		reset 		=> reset,
+        clk_out 	=> clk,
+        locked		=> open
+    );
     
     dut_1 : dut port map(
-        clk         => CLK100MHZ,
+        clk         => clk,
         reset       => reset,
         data        => data,
         count_en    => count_enable
     );
     
     counter_1 : counter port map(
-        clk         => CLK100MHZ,
+        clk         => clk,
         reset       => reset,
         EN          => count_enable,
         count       => LED
