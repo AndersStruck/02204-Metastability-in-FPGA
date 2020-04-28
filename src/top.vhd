@@ -1,4 +1,4 @@
-----------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------
 -- Author: Anders Struck - s143217@student.dtu.dk
 -- Author: Jacob Jessen - s153427@student.dtu.dk
 -- 
@@ -29,15 +29,20 @@ entity top is
 end top;
 
 architecture Behavioral of top is
+
+  component ring_osc is
+    port (  osc_out : out std_logic;
+            reset : in std_logic   );
+  end component;
 	component clk_wiz_0 is
         Port ( clk_in1	: in STD_LOGIC;
-			   reset 	: in STD_LOGIC;
+			         reset 	: in STD_LOGIC;
            	   clk_out 	: out STD_LOGIC;
            	   locked	: out STD_LOGIC);
     end component;
     component dut is
         Port ( clk 		: in STD_LOGIC;
-			   reset 	: in STD_LOGIC;
+			         reset 	: in STD_LOGIC;
            	   data 	: in STD_LOGIC;
            	   count_en	: out STD_LOGIC);
     end component;
@@ -57,6 +62,11 @@ begin
 		reset 		=> reset,
         clk_out 	=> clk,
         locked		=> open
+    );
+
+    ring_1 : ring_osc port map(
+        osc_out     => osc_out,
+        reset       => reset
     );
     
     dut_1 : dut port map(
