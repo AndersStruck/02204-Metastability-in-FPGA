@@ -22,59 +22,57 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity top is
-    Port ( CLK100MHZ  : in STD_LOGIC;
-           reset    : in STD_LOGIC;
-           --data     : in STD_LOGIC;
-           LED      : out STD_LOGIC_VECTOR (0 to 9));
+    Port ( CLK100MHZ  	: in STD_LOGIC;
+           reset		: in STD_LOGIC;
+           r_osc		: out STD_LOGIC;
+           LED      	: out STD_LOGIC_VECTOR (0 to 9));
 end top;
 
 architecture Behavioral of top is
-  signal data    : STD_LOGIC;
-  signal count_enable, clk : STD_LOGIC;
+	signal Ring_oscilator    : STD_LOGIC;
+	signal count_enable, clk : STD_LOGIC;
 
-  component ring_osc is
-    port (  reset : in std_logic;
-            ro_out : out std_logic   );
-  end component;
-  component clk_wiz_0 is
-        Port ( clk_in1  : in STD_LOGIC;
-               reset  : in STD_LOGIC;
-               clk_out  : out STD_LOGIC;
-               locked : out STD_LOGIC);
+	component ring_osc is
+		port ( 	reset 	: in std_logic;
+				ro_out 	: out std_logic);
+	end component;
+	component clk_wiz_0 is
+        Port ( 	clk_in1	: in STD_LOGIC;
+			   	reset 	: in STD_LOGIC;
+           	   	clk_out : out STD_LOGIC;
+           	   	locked	: out STD_LOGIC);
     end component;
     component dut is
-        Port ( clk    : in STD_LOGIC;
-               reset  : in STD_LOGIC;
-               data   : in STD_LOGIC;
-               count_en : out STD_LOGIC);
+        Port ( 	clk 	: in STD_LOGIC;
+			   	reset 	: in STD_LOGIC;
+           	   	data 	: in STD_LOGIC;
+           	   	count_en: out STD_LOGIC);
     end component;
-    
     component counter is
-    Port ( clk    : in STD_LOGIC;
-         reset  : in STD_LOGIC;
-         EN     : in STD_LOGIC;
-         count  : out STD_LOGIC_VECTOR (0 to 9));
+		Port ( 	clk		: in STD_LOGIC;
+			 	reset  	: in STD_LOGIC;
+			 	EN     	: in STD_LOGIC;
+			 	count  	: out STD_LOGIC_VECTOR (0 to 9));
     end component;
-    
-    
 begin
-
+	r_osc <= Ring_oscilator;
+	
     clk_1 : clk_wiz_0 port map(
-      clk_in1   => CLK100MHZ,
-    reset     => reset,
-        clk_out   => clk,
-        locked    => open
+      	clk_in1   	=> CLK100MHZ,
+		reset 		=> reset,
+        clk_out   	=> clk,
+        locked    	=> open
     );
 
     ring_1 : ring_osc port map(
         reset       => reset,
-        ro_out      => data
+        ro_out      => Ring_oscilator
     );
     
     dut_1 : dut port map(
         clk         => clk,
         reset       => reset,
-        data        => data,
+        data        => Ring_oscilator,
         count_en    => count_enable
     );
     
