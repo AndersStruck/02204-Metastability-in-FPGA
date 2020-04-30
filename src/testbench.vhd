@@ -12,7 +12,7 @@ ARCHITECTURE structure OF testbench IS
 	COMPONENT top is
     Port ( CLK100MHZ 	: in STD_LOGIC;
            reset 		: in STD_LOGIC;
-           data 		: in STD_LOGIC;
+           --data 		: in STD_LOGIC;
            LED			: out STD_LOGIC_VECTOR (0 to 9));
 	end COMPONENT;
 	
@@ -32,7 +32,7 @@ BEGIN
 
     top_1  : top PORT MAP ( CLK100MHZ => clk,
 						   reset 	=> reset,
-						   data  	=> data,
+						   --data  	=> data,
 						   LED		=> LED );
 		
 	END structure;
