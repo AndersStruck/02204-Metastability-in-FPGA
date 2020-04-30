@@ -74,8 +74,7 @@ attribute KEEP of ring_delay3 		: signal is "true";
 attribute KEEP of ring_delay4 		: signal is "true"; 
 attribute KEEP of ring_delay5 		: signal is "true"; 
 attribute KEEP of ring_delay6 		: signal is "true";
-attribute KEEP of clk_div2	  		: signal is "true";
-attribute KEEP of toggle	  		: signal is "true";
+attribute KEEP of ring_invert 		: signal is "true";
 --
 -- Attributes to stop delay logic from being optimised.
 --
@@ -86,25 +85,7 @@ attribute DONT_TOUCH of ring_delay3 : signal is "true";
 attribute DONT_TOUCH of ring_delay4 : signal is "true";
 attribute DONT_TOUCH of ring_delay5 : signal is "true";
 attribute DONT_TOUCH of ring_delay6 : signal is "true";
-attribute DONT_TOUCH of clk_div2	: signal is "true";
-attribute DONT_TOUCH of toggle		: signal is "true";
---
-------------------------------------------------------------------------------------
---
--- Attributes to define LUT contents during implementation for primitives not 
--- contained within generate loops. In each case the information is repeated
--- in the generic map for functional simulation
---
-attribute INIT : string; 
-attribute INIT of div2_lut              : label is "1"; 
-attribute INIT of delay1_lut            : label is "8"; 
-attribute INIT of delay2_lut            : label is "4"; 
-attribute INIT of delay3_lut            : label is "4"; 
-attribute INIT of delay4_lut            : label is "4"; 
-attribute INIT of delay5_lut            : label is "4"; 
-attribute INIT of delay6_lut            : label is "4"; 
-
-attribute INIT of invert_lut            : label is "2"; 
+attribute DONT_TOUCH of ring_invert : signal is "true";
 --
 ------------------------------------------------------------------------------------
 --    
@@ -113,85 +94,50 @@ attribute INIT of invert_lut            : label is "2";
 ------------------------------------------------------------------------------------
 --    
 begin
-	--
-	--Output is the ring oscillator divided by 2 to provide a square wave.
-	--
-	ro_out <= clk_div2;
-	
+	ro_out <= ring_invert;
 	resetn <= NOT reset;
-	
-	toggle_flop: FD
-	port map ( D => toggle,
-			 Q => clk_div2,
-			 C => ring_invert);
-	
-	div2_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => X"1")
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => clk_div2,
-			 O => toggle );
-	
+
 	--
 	--Ring oscillator is formed of 5 levels of logic of which one is an inverter.
 	--
 	
-	delay1_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_invert,
-			 O => ring_delay1 );
+	delay1_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_invert,
+			 		O 	=> ring_delay1 );
 	
-	delay2_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_delay1,
-			 O => ring_delay2 );
+	delay2_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay1,
+			 		O 	=> ring_delay2 );
 	
-	delay3_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_delay2,
-			 O => ring_delay3 );
+	delay3_lut: LUT2 generic map (
+		INIT => I1 AND I0) 
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay2,
+			 		O 	=> ring_delay3 );
 	
-	delay4_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_delay3,
-			 O => ring_delay4 );
+	delay4_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1	=> ring_delay3,
+				 	O 	=> ring_delay4 );
 	
 	
-	delay5_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_delay4,
-			 O => ring_delay5 );
+	delay5_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay4,
+			 		O 	=> ring_delay5 );
 			 
-	delay6_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => I1 AND I0)
-	--synthesis translate_on
-	port map( I0 => resetn,
-				I1 => ring_delay5,
-				O => ring_delay6 );             
-			 
-	invert_lut: LUT2
-	--synthesis translate_off
-	generic map (INIT => (I0 and NOT I1))
-	--synthesis translate_on
-	port map( I0 => resetn,
-			I1 => ring_delay6,
-			 O => ring_invert );
+	delay6_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay5,
+					O 	=> ring_delay6 );
+	
+	ring_invert <= not ring_delay6;
 	
 end low_level_definition;

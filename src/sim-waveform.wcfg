@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="testbench_time_impl.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="testbench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="95001fs"></ZoomEndTime>
+      <Cursor1Time time="15000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="180"></NameColumnWidth>
+      <ValueColumnWidth column_width="140"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/testbench/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/clk_1/clk_out" type="logic">
+      <obj_property name="ElementShortName">clk_out</obj_property>
+      <obj_property name="ObjectShortName">clk_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/dut_1/d4" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">d4</obj_property>
+      <obj_property name="ObjectShortName">d4</obj_property>
+      <obj_property name="label">Count_enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/LED" type="array">
+      <obj_property name="ElementShortName">LED[9:0]</obj_property>
+      <obj_property name="ObjectShortName">LED[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/r_osc" type="logic">
+      <obj_property name="ElementShortName">r_osc</obj_property>
+      <obj_property name="ObjectShortName">r_osc</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/out" type="logic">
+      <obj_property name="ElementShortName">out</obj_property>
+      <obj_property name="ObjectShortName">out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay1" type="logic">
+      <obj_property name="ElementShortName">ring_delay1</obj_property>
+      <obj_property name="ObjectShortName">ring_delay1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay2" type="logic">
+      <obj_property name="ElementShortName">ring_delay2</obj_property>
+      <obj_property name="ObjectShortName">ring_delay2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay3" type="logic">
+      <obj_property name="ElementShortName">ring_delay3</obj_property>
+      <obj_property name="ObjectShortName">ring_delay3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay4" type="logic">
+      <obj_property name="ElementShortName">ring_delay4</obj_property>
+      <obj_property name="ObjectShortName">ring_delay4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay5" type="logic">
+      <obj_property name="ElementShortName">ring_delay5</obj_property>
+      <obj_property name="ObjectShortName">ring_delay5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay6" type="logic">
+      <obj_property name="ElementShortName">ring_delay6</obj_property>
+      <obj_property name="ObjectShortName">ring_delay6</obj_property>
+   </wvobject>
+</wave_config>
