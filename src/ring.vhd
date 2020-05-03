@@ -1,5 +1,21 @@
--- Library declarations
+  ----------------------------------------------------------------------------------
+-- Author: Anders Struck - s143217@student.dtu.dk
+-- Author: Jacob Jessen - s153427@student.dtu.dk
+-- 
+-- Create Date: 21.04.2020
+-- Design Name: 
+-- Module Name: Ring Oscilator
+-- Project Name: 02204 Design of Asynchronous circuits - Metastability testing in FPGA
+-- Description: Ring oscilator used to generate uncorrolated data for testing in the DUT module.
+-- 
+-- Git reposotory:
+-- https://github.com/AndersStruck/02204-Metastability-in-FPGA
 --
+-- Revision:
+-- Revision 0.01 - 21.04.2020 - File Created
+-- Revision 0.10 - 21.04.2020 - First implementation
+-- 
+----------------------------------------------------------------------------------
 -- The Unisim Library is used to define Xilinx primitives. It is also used during
 -- simulation. The source can be viewed at %XILINX%\vhdl\src\unisims\unisim_VCOMP.vhd
 --
@@ -37,39 +53,57 @@ signal ring_delay3      : std_logic;
 signal ring_delay4      : std_logic;
 signal ring_delay5      : std_logic;
 signal ring_delay6      : std_logic;
+signal ring_delay7      : std_logic;
+signal ring_delay8      : std_logic;
+signal ring_delay9      : std_logic;
+signal ring_delay10      : std_logic;
+signal ring_delay11      : std_logic;
+signal ring_delay12      : std_logic;
 signal ring_invert      : std_logic;
 signal toggle           : std_logic;
 signal clk_div2         : std_logic;
 
 signal resetn : std_logic;
 
+-- The following constants are defined to allow for
+--   equation-based INIT specification for a LUT2.
+constant I0 : BIT_VECTOR(3 downto 0) := X"A";
+constant I1 : BIT_VECTOR(3 downto 0) := X"C";
+
 --
 -- Attributes to stop delay logic from being optimised.
 --
 attribute KEEP : string; 
-attribute KEEP of ring_delay1 : signal is "true"; 
-attribute KEEP of ring_delay2 : signal is "true"; 
-attribute KEEP of ring_delay3 : signal is "true"; 
-attribute KEEP of ring_delay4 : signal is "true"; 
-attribute KEEP of ring_delay5 : signal is "true"; 
-attribute KEEP of ring_delay6 : signal is "true";
+attribute KEEP of ring_delay1 		: signal is "true"; 
+attribute KEEP of ring_delay2 		: signal is "true"; 
+attribute KEEP of ring_delay3 		: signal is "true"; 
+attribute KEEP of ring_delay4 		: signal is "true"; 
+attribute KEEP of ring_delay5 		: signal is "true"; 
+attribute KEEP of ring_delay6 		: signal is "true";
+attribute KEEP of ring_delay7 		: signal is "true"; 
+attribute KEEP of ring_delay8 		: signal is "true"; 
+attribute KEEP of ring_delay9 		: signal is "true"; 
+attribute KEEP of ring_delay10 		: signal is "true"; 
+attribute KEEP of ring_delay11		: signal is "true"; 
+attribute KEEP of ring_delay12 		: signal is "true";
+attribute KEEP of ring_invert 		: signal is "true";
 --
-------------------------------------------------------------------------------------
+-- Attributes to stop delay logic from being optimised.
 --
--- Attributes to define LUT contents during implementation for primitives not 
--- contained within generate loops. In each case the information is repeated
--- in the generic map for functional simulation
---
-attribute INIT : string; 
-attribute INIT of div2_lut              : label is "1"; 
-attribute INIT of delay1_lut            : label is "4"; 
-attribute INIT of delay2_lut            : label is "4"; 
-attribute INIT of delay3_lut            : label is "4"; 
-attribute INIT of delay4_lut            : label is "4"; 
-attribute INIT of delay5_lut            : label is "4"; 
-attribute INIT of delay6_lut            : label is "4"; 
-
-attribute INIT of invert_lut            : label is "B"; 
+attribute DONT_TOUCH : string;
+attribute DONT_TOUCH of ring_delay1 	: signal is "true";
+attribute DONT_TOUCH of ring_delay2 	: signal is "true";
+attribute DONT_TOUCH of ring_delay3 	: signal is "true";
+attribute DONT_TOUCH of ring_delay4 	: signal is "true";
+attribute DONT_TOUCH of ring_delay5 	: signal is "true";
+attribute DONT_TOUCH of ring_delay6 	: signal is "true";
+attribute DONT_TOUCH of ring_invert 	: signal is "true";
+attribute DONT_TOUCH of ring_delay7 	: signal is "true"; 
+attribute DONT_TOUCH of ring_delay8 	: signal is "true"; 
+attribute DONT_TOUCH of ring_delay9 	: signal is "true"; 
+attribute DONT_TOUCH of ring_delay10 	: signal is "true"; 
+attribute DONT_TOUCH of ring_delay11	: signal is "true"; 
+attribute DONT_TOUCH of ring_delay12 	: signal is "true";
 --
 ------------------------------------------------------------------------------------
 --    
@@ -78,73 +112,90 @@ attribute INIT of invert_lut            : label is "B";
 ------------------------------------------------------------------------------------
 --    
 begin
-  --
-  --Output is the ring oscillator divided by 2 to provide a square wave.
-  --
-  ro_out <= ring_invert;
+	ro_out <= ring_invert;
+	resetn <= NOT reset;
 
-  resetn <= NOT reset;
-
-  --
-  --Ring oscillator is formed of 5 levels of logic of which one is an inverter.
-  --
-
-  delay1_lut: LUT2
-  
-    generic map (INIT => X"4")
-  
-  port map( I0 => resetn,
-            I1 => ring_invert,
-             O => ring_delay1 );
-
-  delay2_lut: LUT2
-  
-    generic map (INIT => X"4")
-  
-  port map( I0 => resetn,
-            I1 => ring_delay1,
-             O => ring_delay2 );
-
-  delay3_lut: LUT2
-  
-    generic map (INIT => X"4")
-  
-  port map( I0 => resetn,
-            I1 => ring_delay2,
-             O => ring_delay3 );
-
-  delay4_lut: LUT2
-  
-    generic map (INIT => X"4")
-  
-  port map( I0 => resetn,
-            I1 => ring_delay3,
-             O => ring_delay4 );
-
-
-  delay5_lut: LUT2
-  
-    generic map (INIT => X"4")
-  
-  port map( I0 => resetn,
-            I1 => ring_delay4,
-             O => ring_delay5 );
-             
-  delay6_lut: LUT2
-             
-               generic map (INIT => X"4")
-             
-             port map( I0 => resetn,
-                       I1 => ring_delay5,
-                        O => ring_delay6 );             
-             
-  invert_lut: LUT2
-  
-    generic map (INIT => X"B")
-  
-  port map( I0 => resetn,
-            I1 => ring_delay6,
-             O => ring_invert );
+	--
+	--Ring oscillator is formed of 5 levels of logic of which one is an inverter.
+	--
+	
+	delay1_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_invert,
+			 		O 	=> ring_delay1 );
+	
+	delay2_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay1,
+			 		O 	=> ring_delay2 );
+	
+	delay3_lut: LUT2 generic map (
+		INIT => I1 AND I0) 
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay2,
+			 		O 	=> ring_delay3 );
+	
+	delay4_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1	=> ring_delay3,
+				 	O 	=> ring_delay4 );
+	
+	
+	delay5_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay4,
+			 		O 	=> ring_delay5 );
+			 
+	delay6_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay5,
+					O 	=> ring_delay6 );
 
 
+
+
+	delay7_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay6,
+			 		O 	=> ring_delay7 );
+	
+	delay8_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay7,
+			 		O 	=> ring_delay8 );
+	
+	delay9_lut: LUT2 generic map (
+		INIT => I1 AND I0) 
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay8,
+			 		O 	=> ring_delay9 );
+	
+	delay10_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1	=> ring_delay9,
+				 	O 	=> ring_delay10 );
+	
+	
+	delay11_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay10,
+			 		O 	=> ring_delay11 );
+			 
+	delay12_lut: LUT2 generic map (
+		INIT => I1 AND I0)
+		port map( 	I0 	=> resetn,
+					I1 	=> ring_delay11,
+					O 	=> ring_delay12 );
+	
+	ring_invert <= not ring_delay12;
+	
 end low_level_definition;
