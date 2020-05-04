@@ -71,7 +71,7 @@ port
   -- Clock out ports
   clk_out          : out    std_logic;
   -- Status and control signals
-  reset             : in     std_logic;
+  resetn             : in     std_logic;
   locked            : out    std_logic;
   clk_in1           : in     std_logic
  );
@@ -86,7 +86,7 @@ your_instance_name : clk_wiz_0
   -- Clock out ports  
    clk_out => clk_out,
   -- Status and control signals                
-   reset => reset,
+   resetn => resetn,
    locked => locked,
    -- Clock in ports
    clk_in1 => clk_in1

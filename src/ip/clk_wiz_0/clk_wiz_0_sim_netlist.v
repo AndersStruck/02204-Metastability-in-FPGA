@@ -1,10 +1,10 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-// Date        : Mon Apr 27 17:55:23 2020
+// Date        : Mon May  4 17:48:26 2020
 // Host        : Sequence running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim -rename_top clk_wiz_0 -prefix
-//               clk_wiz_0_ clk_wiz_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim
+//               D:/Dropbox/02204_Design_of_asynchronous_circuits/Project/02204-Metastability-in-FPGA/src/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
 // Design      : clk_wiz_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -15,33 +15,34 @@
 (* NotValidForBitStream *)
 module clk_wiz_0
    (clk_out,
-    reset,
+    resetn,
     locked,
     clk_in1);
   output clk_out;
-  input reset;
+  input resetn;
   output locked;
   input clk_in1;
 
   (* IBUF_LOW_PWR *) wire clk_in1;
   wire clk_out;
   wire locked;
-  wire reset;
+  wire resetn;
 
   clk_wiz_0_clk_wiz_0_clk_wiz inst
        (.clk_in1(clk_in1),
         .clk_out(clk_out),
         .locked(locked),
-        .reset(reset));
+        .resetn(resetn));
 endmodule
 
+(* ORIG_REF_NAME = "clk_wiz_0_clk_wiz" *) 
 module clk_wiz_0_clk_wiz_0_clk_wiz
    (clk_out,
-    reset,
+    resetn,
     locked,
     clk_in1);
   output clk_out;
-  input reset;
+  input resetn;
   output locked;
   input clk_in1;
 
@@ -52,7 +53,8 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
   wire clkfbout_buf_clk_wiz_0;
   wire clkfbout_clk_wiz_0;
   wire locked;
-  wire reset;
+  wire reset_high;
+  wire resetn;
   wire NLW_mmcm_adv_inst_CLKFBOUTB_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED;
@@ -170,7 +172,12 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
         .PSEN(1'b0),
         .PSINCDEC(1'b0),
         .PWRDWN(1'b0),
-        .RST(reset));
+        .RST(reset_high));
+  LUT1 #(
+    .INIT(2'h1)) 
+    mmcm_adv_inst_i_1
+       (.I0(resetn),
+        .O(reset_high));
 endmodule
 `ifndef GLBL
 `define GLBL

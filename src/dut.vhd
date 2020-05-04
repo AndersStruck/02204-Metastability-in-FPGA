@@ -15,6 +15,7 @@
 -- Revision:
 -- Revision 0.01 - 21.04.2020 - File Created
 -- Revision 0.10 - 21.04.2020 - First implementation
+-- Revision 0.50 - 04.05.2020 - Changed reset to active low.
 -- 
 ----------------------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity dut is
     Port ( clk 		: in STD_LOGIC;
-           reset 	: in STD_LOGIC;
+           resetn 	: in STD_LOGIC;
            data 	: in STD_LOGIC;
            count_en	: out STD_LOGIC);
 end dut;
@@ -35,8 +36,8 @@ begin
     
     d4_next <= d2 XOR d3;
     count_en <= d4;
-    process( clk, reset ) begin
-        if reset='1' then
+    process( clk, resetn ) begin
+        if resetn='0' then
             dut         <= '0';
             d2      	<= '0';
         elsif rising_edge(clk) then
@@ -45,8 +46,8 @@ begin
         end if;
     end process;
     
-    process( clk, reset ) begin
-        if reset='1' then
+    process( clk, resetn ) begin
+        if resetn='0' then
             d3      	<= '0';
             d4          <= '0';
         elsif falling_edge(clk) then

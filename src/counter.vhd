@@ -14,6 +14,8 @@
 -- Revision:
 -- Revision 0.01 - 21.04.2020 - File Created
 -- Revision 0.10 - 21.04.2020 - First implementation
+-- Revision 0.50 - 04.05.2020 - Changed to 16 bit counter.
+-- Revision 0.80 - 04.05.2020 - Added overflow indicator.
 -- 
 ----------------------------------------------------------------------------------
 
@@ -23,25 +25,33 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.all;
 
 entity counter is
-    Port ( clk      : in STD_LOGIC;
-           reset    : in STD_LOGIC;
-           EN       : in STD_LOGIC;
-           count    : out STD_LOGIC_VECTOR (0 to 9));
+	generic (
+   			BITS 	: Integer := 16);
+    Port ( 	clk		: in STD_LOGIC;
+           	resetn	: in STD_LOGIC;
+           	EN		: in STD_LOGIC;
+           	overflow: out STD_LOGIC;
+           	count	: out STD_LOGIC_VECTOR (BITS-1 downto 0));
 end counter;
 
 architecture Behavioral of counter is
-    signal val, reg : unsigned(0 to 9);
-    
+    signal val, reg : unsigned(BITS-1 downto 0);
+    signal overFl	: std_logic;
 begin
     count   <= std_logic_vector(reg);
     val     <= reg + 1;
-    
-    process(clk,reset) begin
-        if reset='1' then
+    overflow <= overFl;
+    process(clk,resetn) begin
+        if resetn='0' then
             reg <= (others => '0');
+            overFl <= '0';
         elsif rising_edge(clk) then
+        	overFl 	<= overFl;
             if EN='1' then
-                reg <= val;
+            	reg <= val;
+            	if val = 0 then
+            		overFl <= '1';
+                end if;
             end if;
         end if;
     end process;
