@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="106140fs"></ZoomEndTime>
-      <Cursor1Time time="17398fs"></Cursor1Time>
+      <ZoomStartTime time="249087fs"></ZoomStartTime>
+      <ZoomEndTime time="372688fs"></ZoomEndTime>
+      <Cursor1Time time="341087fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="180"></NameColumnWidth>
-      <ValueColumnWidth column_width="135"></ValueColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="9" />
    <wvobject fp_name="/testbench/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -46,60 +46,16 @@
       <obj_property name="ElementShortName">r_osc</obj_property>
       <obj_property name="ObjectShortName">r_osc</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/out" type="logic">
-      <obj_property name="ElementShortName">out</obj_property>
-      <obj_property name="ObjectShortName">out</obj_property>
+   <wvobject fp_name="/testbench/top_1/ring_1/out" type="array">
+      <obj_property name="ElementShortName">out[0:0]</obj_property>
+      <obj_property name="ObjectShortName">out[0:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay1" type="logic">
-      <obj_property name="ElementShortName">ring_delay1</obj_property>
-      <obj_property name="ObjectShortName">ring_delay1</obj_property>
+   <wvobject fp_name="/testbench/top_1/ring_1/out[0]" type="logic">
+      <obj_property name="ElementShortName">[0]</obj_property>
+      <obj_property name="ObjectShortName">[0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay2" type="logic">
-      <obj_property name="ElementShortName">ring_delay2</obj_property>
-      <obj_property name="ObjectShortName">ring_delay2</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay3" type="logic">
-      <obj_property name="ElementShortName">ring_delay3</obj_property>
-      <obj_property name="ObjectShortName">ring_delay3</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay4" type="logic">
-      <obj_property name="ElementShortName">ring_delay4</obj_property>
-      <obj_property name="ObjectShortName">ring_delay4</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay5" type="logic">
-      <obj_property name="ElementShortName">ring_delay5</obj_property>
-      <obj_property name="ObjectShortName">ring_delay5</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay6" type="logic">
-      <obj_property name="ElementShortName">ring_delay6</obj_property>
-      <obj_property name="ObjectShortName">ring_delay6</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay7" type="logic">
-      <obj_property name="ElementShortName">ring_delay7</obj_property>
-      <obj_property name="ObjectShortName">ring_delay7</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay8" type="logic">
-      <obj_property name="ElementShortName">ring_delay8</obj_property>
-      <obj_property name="ObjectShortName">ring_delay8</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay9" type="logic">
-      <obj_property name="ElementShortName">ring_delay9</obj_property>
-      <obj_property name="ObjectShortName">ring_delay9</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay10" type="logic">
-      <obj_property name="ElementShortName">ring_delay10</obj_property>
-      <obj_property name="ObjectShortName">ring_delay10</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay11" type="logic">
-      <obj_property name="ElementShortName">ring_delay11</obj_property>
-      <obj_property name="ObjectShortName">ring_delay11</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay12" type="logic">
-      <obj_property name="ElementShortName">ring_delay12</obj_property>
-      <obj_property name="ObjectShortName">ring_delay12</obj_property>
-   </wvobject>
-   <wvobject fp_name="/testbench/top_1/ring_1/ring_invert" type="logic">
-      <obj_property name="ElementShortName">ring_invert</obj_property>
-      <obj_property name="ObjectShortName">ring_invert</obj_property>
+   <wvobject fp_name="/testbench/top_1/ring_1/ring_delay" type="array">
+      <obj_property name="ElementShortName">ring_delay[100:0]</obj_property>
+      <obj_property name="ObjectShortName">ring_delay[100:0]</obj_property>
    </wvobject>
 </wave_config>
