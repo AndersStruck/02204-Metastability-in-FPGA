@@ -15,6 +15,7 @@
 -- Revision 0.01 - 21.04.2020 - File Created
 -- Revision 0.10 - 21.04.2020 - First implementation
 -- Revision 0.20 - 04.05.2020 - Changed to for-generate method for generating the delay LUTS
+-- Revision 0.30 - 04.05.2020 - Changed the implementation to work with reset active low.
 -- 
 ----------------------------------------------------------------------------------
 -- The Unisim Library is used to define Xilinx primitives. It is also used during
@@ -31,12 +32,11 @@ entity ring_osc is
 	generic (
    			LUTS 	: Natural := 10);		-- neutral = 0 to Integer'high
   	port(   ro_out 	: out std_logic;
-            reset 	: in std_logic   );
+            resetn 	: in std_logic   );
 end ring_osc;
 
 architecture low_level_definition of ring_osc is
 	signal ring_delay	: std_logic_vector(LUTS downto 0);
-	signal resetn 		: std_logic;
 	
 	-- The following constants are defined to allow for
 	--   equation-based INIT specification for a LUT2.
@@ -50,7 +50,6 @@ architecture low_level_definition of ring_osc is
 	attribute DONT_TOUCH of ring_delay 	: signal is "true";
 
 begin
-	resetn <= NOT reset;
 	-- The Ring oscilator is generated from the generic LUTS
 	delay_generator:
    	for i in 0 to LUTS-1 generate
