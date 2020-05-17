@@ -16,6 +16,7 @@
 -- Revision 0.10 - 21.04.2020 - First implementation
 -- Revision 0.20 - 04.05.2020 - Changed reset to be active low
 -- Revision 0.30 - 04.05.2020 - Updated top component with status output
+-- Revision 0.50 - 12.05.2020 - Changed Endian of LEDS
 -- 
 ----------------------------------------------------------------------------------
 LIBRARY IEEE;
@@ -34,15 +35,15 @@ ARCHITECTURE structure OF testbench IS
            resetn		: in STD_LOGIC;
            r_osc		: out STD_LOGIC;
            status		: out STD_LOGIC;
-           LED      	: out STD_LOGIC_VECTOR (0 to 9));
+           LED      	: out STD_LOGIC_VECTOR ( 15 downto 0));
 	end COMPONENT;
 	
 	-- Internal clock signal
-	SIGNAL clk, reset: std_logic;
-	SIGNAL LED: STD_LOGIC_VECTOR(9 downto 0);
-	SIGNAL r_osc : STD_LOGIC;
+	SIGNAL clk, resetn: std_logic;
+	SIGNAL LED: STD_LOGIC_VECTOR ( 15 downto 0);
+	SIGNAL r_osc, status : STD_LOGIC;
 BEGIN
-    -- assert reset, note that reset is active high
+    -- assert reset, note that reset is active low
     resetn <= '0', '1' after 10 ns;
     
 	-- Clock generation (simulation use only)
@@ -55,6 +56,6 @@ BEGIN
     top_1  : top PORT MAP ( CLK100MHZ 	=> clk,
 						   resetn 		=> resetn,
 						   r_osc  		=> r_osc,
-						   LED			=> LED );
-		
+						   status		=> status,
+						   LED			=> LED);
 	END structure;

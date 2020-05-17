@@ -19,6 +19,7 @@
 -- Revision 0.50 - 04.05.2020 - Changed reset level to active low.
 --							  - Changed ENDIAN of LEDs.
 --							  - Added counter overflow indicator
+-- Revision 0.90 - 12.05.2020 - Added the clock output
 -- 
 ----------------------------------------------------------------------------------
 
@@ -32,6 +33,7 @@ entity top is
            r_osc	: out STD_LOGIC;
            status	: out STD_LOGIC;
            count_ovf: out STD_LOGIC;
+           clk_out	: out STD_LOGIC;
            LED      : out STD_LOGIC_VECTOR ( 15 downto 0));
 end top;
 
@@ -46,7 +48,7 @@ architecture Behavioral of top is
 	end component;
   	component ring_osc is
   		generic (
-   				LUTS 	: Natural := 100);
+   				LUTS 	: Natural := 10);
    		Port (  resetn  : in std_logic;
             	ro_out  : out std_logic);
   	end component;
@@ -73,7 +75,7 @@ architecture Behavioral of top is
     end component;
 begin
   	r_osc <= Ring_oscilator;
-  
+  	clk_out <= clk;
     clk_1 : clk_wiz_0 port map(
         clk_in1     => CLK100MHZ,
         resetn     	=> resetn,
